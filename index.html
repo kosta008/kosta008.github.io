@@ -317,42 +317,35 @@
       }
 
       .games-list {
-        display: flex;
-        flex-direction: column;
-        gap: 22px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
       }
 
       .game-row {
         background: var(--surface);
         border: 1px solid var(--surface-border);
-        border-radius: 24px;
+        border-radius: 20px;
         overflow: clip;
         position: relative;
-        transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-        display: grid;
-        grid-template-columns: 290px 1fr;
-        min-height: 220px;
-      }
-
-      .game-row.row-reverse {
-        grid-template-columns: 1fr 290px;
+        transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
       }
 
       .game-row::before {
         content: "";
         position: absolute;
-        inset: -35% 18% auto;
-        height: 180px;
+        inset: -30% 14% auto;
+        height: 140px;
         background: radial-gradient(circle, rgba(105, 217, 255, 0.32), transparent 72%);
         opacity: 0;
-        transition: opacity 0.35s ease;
+        transition: opacity 0.28s ease;
         pointer-events: none;
       }
 
       .game-row:hover {
-        transform: translateY(-8px) scale(1.005);
+        transform: translateY(-6px);
         border-color: rgba(105, 217, 255, 0.45);
-        box-shadow: 0 26px 48px rgba(6, 11, 25, 0.6);
+        box-shadow: 0 18px 34px rgba(6, 11, 25, 0.56);
       }
 
       .game-row:hover::before {
@@ -362,136 +355,139 @@
       .game-poster {
         background: #101523;
         overflow: hidden;
-      }
-
-      .game-row.row-reverse .game-poster {
-        order: 2;
-      }
-
-      .game-row.row-reverse .game-details {
-        order: 1;
+        aspect-ratio: 1 / 1;
       }
 
       .game-poster img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.55s ease;
+        transition: transform 0.4s ease;
       }
 
       .game-row:hover .game-poster img {
-        transform: scale(1.08);
+        transform: scale(1.06);
       }
 
       .game-details {
-        padding: 22px 22px 22px;
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
+        padding: 12px 12px 14px;
       }
 
       .game-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
+        display: block;
       }
 
       .game-details h3 {
         margin: 0;
-        font-size: 1.22rem;
+        font-size: 0.95rem;
+        text-align: center;
+        min-height: 2.3em;
       }
 
       .game-rating {
+        display: none;
+      }
+
+      .game-details p,
+      .platforms-label,
+      .platform-links {
+        display: none;
+      }
+
+      .play-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(2, 4, 12, 0.86);
+        backdrop-filter: blur(7px);
+        padding: 24px;
+      }
+
+      .play-modal.open {
+        display: flex;
+      }
+
+      .play-modal__dialog {
+        width: min(1180px, 100%);
+        background: rgba(13, 18, 33, 0.97);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 18px;
+        box-shadow: 0 28px 56px rgba(5, 10, 24, 0.75);
+        overflow: hidden;
+      }
+
+      .play-modal__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .play-modal__title {
+        margin: 0;
+        font-size: 1.03rem;
+      }
+
+      .play-modal__actions {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 999px;
-        padding: 6px 12px;
-        white-space: nowrap;
       }
 
-      .game-rating strong {
-        color: #ffe58f;
-        letter-spacing: 0.02em;
-      }
-
-      .game-details p {
-        margin: 0;
-        color: var(--text-muted);
-        font-size: 0.96rem;
-        line-height: 1.5;
-      }
-
-      .platforms-label {
-        color: #d8e0f5;
-        font-size: 0.88rem;
-        opacity: 0.88;
-      }
-
-      .platform-links {
-        margin-top: 8px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
-      .platform-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 9px;
+      .play-modal__open-link {
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 10px;
+        padding: 7px 11px;
         text-decoration: none;
-        color: #edf3ff;
+        color: #eef3ff;
+        font-size: 0.86rem;
         font-weight: 700;
-        font-size: 0.9rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        background: rgba(255, 255, 255, 0.04);
-        padding: 8px 12px;
-        border-radius: 12px;
-        transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        background: rgba(255, 255, 255, 0.03);
       }
 
-      .platform-link:hover {
-        transform: translateY(-2px);
-        border-color: rgba(105, 217, 255, 0.56);
-        background: rgba(105, 217, 255, 0.12);
-        box-shadow: 0 10px 20px rgba(7, 15, 31, 0.45);
+      .play-modal__close {
+        border: 0;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.08);
+        color: #f2f6ff;
+        cursor: pointer;
+        font-size: 1.05rem;
       }
 
-      .platform-link.disabled {
-        cursor: not-allowed;
-        opacity: 0.72;
+      .play-modal__frame-wrap {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        min-height: min(72vh, 620px);
+        background: #070b16;
       }
 
-      .platform-link.disabled:hover {
-        transform: none;
-        border-color: rgba(255, 255, 255, 0.2);
-        background: rgba(255, 255, 255, 0.04);
-        box-shadow: none;
+      .play-modal__frame {
+        width: 100%;
+        height: 100%;
+        border: 0;
       }
 
-      .platform-icon {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        display: inline-grid;
-        place-items: center;
-        font-size: 0.72rem;
-        font-weight: 800;
+      .play-modal__hint {
+        margin: 0;
+        padding: 10px 16px 16px;
+        color: #c4d0ea;
+        font-size: 0.88rem;
       }
 
-      .platform-rustore .platform-icon {
-        background: #3a8dff;
+      .game-row {
+        cursor: pointer;
       }
 
-      .platform-ok .platform-icon {
-        background: #ff9300;
-      }
-
-      .platform-yandex .platform-icon {
-        background: #ea3131;
+      .game-poster,
+      .game-details h3 {
+        cursor: pointer;
       }
 
       .about {
@@ -542,23 +538,22 @@
           padding: 22px;
         }
 
-        .game-row,
-        .game-row.row-reverse {
+        .games-list {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 420px) {
+        .games-list {
           grid-template-columns: 1fr;
         }
 
-        .game-row.row-reverse .game-poster,
-        .game-row.row-reverse .game-details {
-          order: initial;
+        .play-modal {
+          padding: 10px;
         }
 
-        .game-poster {
-          min-height: 200px;
-        }
-
-        .game-top {
-          flex-direction: column;
-          align-items: flex-start;
+        .play-modal__frame-wrap {
+          min-height: 60vh;
         }
       }
     </style>
@@ -638,7 +633,7 @@
         </p>
 
         <div class="games-list">
-          <article class="game-row reveal reveal-left reveal-delay-1">
+          <article class="game-row reveal reveal-left reveal-delay-1" data-yandex-app="247696" data-game-url="https://s3.eponesh.com/games/17550/v26/">
             <div class="game-poster">
               <img src="Noobik Obby Parkour/icon 256x256.png" alt="Noobik Obby Parkour" />
             </div>
@@ -651,15 +646,15 @@
               <div>
                 <div class="platforms-label" data-i18n="platformsLabel">Платформы</div>
                 <div class="platform-links">
-                  <a class="platform-link platform-rustore disabled" href="#" aria-disabled="true"><span class="platform-icon">R</span>RuStore</a>
-                  <a class="platform-link platform-ok disabled" href="#" aria-disabled="true"><span class="platform-icon">OK</span>OK</a>
+                  <a class="platform-link platform-rustore" href="https://www.rustore.ru" target="_blank" rel="noopener noreferrer"><span class="platform-icon">R</span>RuStore</a>
+                  <a class="platform-link platform-ok" href="https://ok.ru/games" target="_blank" rel="noopener noreferrer"><span class="platform-icon">OK</span>OK</a>
                   <a class="platform-link platform-yandex" href="https://yandex.ru/games/developer/92985#app=247696" target="_blank" rel="noopener noreferrer"><span class="platform-icon">Y</span>Yandex</a>
                 </div>
               </div>
             </div>
           </article>
 
-          <article class="game-row row-reverse reveal reveal-right reveal-delay-2">
+          <article class="game-row row-reverse reveal reveal-right reveal-delay-2" data-yandex-app="356320" data-game-url="https://s3.eponesh.com/games/17905/v5/">
             <div class="game-poster">
               <img src="Money Collector/icon1 (3).png" alt="Money Collector" />
             </div>
@@ -672,15 +667,15 @@
               <div>
                 <div class="platforms-label" data-i18n="platformsLabel">Платформы</div>
                 <div class="platform-links">
-                  <a class="platform-link platform-rustore disabled" href="#" aria-disabled="true"><span class="platform-icon">R</span>RuStore</a>
-                  <a class="platform-link platform-ok disabled" href="#" aria-disabled="true"><span class="platform-icon">OK</span>OK</a>
+                  <a class="platform-link platform-rustore" href="https://www.rustore.ru" target="_blank" rel="noopener noreferrer"><span class="platform-icon">R</span>RuStore</a>
+                  <a class="platform-link platform-ok" href="https://ok.ru/games" target="_blank" rel="noopener noreferrer"><span class="platform-icon">OK</span>OK</a>
                   <a class="platform-link platform-yandex" href="https://yandex.ru/games/developer/92985#app=356320" target="_blank" rel="noopener noreferrer"><span class="platform-icon">Y</span>Yandex</a>
                 </div>
               </div>
             </div>
           </article>
 
-          <article class="game-row reveal reveal-left reveal-delay-3">
+          <article class="game-row reveal reveal-left reveal-delay-3" data-yandex-app="263779" data-game-url="https://s3.eponesh.com/games/14571/v16/">
             <div class="game-poster">
               <img src="Bolts/icon1 (3).png" alt="Bolts and Nuts" />
             </div>
@@ -693,15 +688,15 @@
               <div>
                 <div class="platforms-label" data-i18n="platformsLabel">Платформы</div>
                 <div class="platform-links">
-                  <a class="platform-link platform-rustore disabled" href="#" aria-disabled="true"><span class="platform-icon">R</span>RuStore</a>
-                  <a class="platform-link platform-ok disabled" href="#" aria-disabled="true"><span class="platform-icon">OK</span>OK</a>
+                  <a class="platform-link platform-rustore" href="https://www.rustore.ru" target="_blank" rel="noopener noreferrer"><span class="platform-icon">R</span>RuStore</a>
+                  <a class="platform-link platform-ok" href="https://ok.ru/games" target="_blank" rel="noopener noreferrer"><span class="platform-icon">OK</span>OK</a>
                   <a class="platform-link platform-yandex" href="https://yandex.ru/games/developer/92985#app=263779" target="_blank" rel="noopener noreferrer"><span class="platform-icon">Y</span>Yandex</a>
                 </div>
               </div>
             </div>
           </article>
 
-          <article class="game-row row-reverse reveal reveal-right reveal-delay-4">
+          <article class="game-row row-reverse reveal reveal-right reveal-delay-4" data-yandex-app="335063" data-game-url="https://s3.eponesh.com/games/17434/v14/">
             <div class="game-poster">
               <img src="BusStop/icon1-_1_.png" alt="Nextbots Backrooms Sandbox" />
             </div>
@@ -714,15 +709,15 @@
               <div>
                 <div class="platforms-label" data-i18n="platformsLabel">Платформы</div>
                 <div class="platform-links">
-                  <a class="platform-link platform-rustore disabled" href="#" aria-disabled="true"><span class="platform-icon">R</span>RuStore</a>
-                  <a class="platform-link platform-ok disabled" href="#" aria-disabled="true"><span class="platform-icon">OK</span>OK</a>
+                  <a class="platform-link platform-rustore" href="https://www.rustore.ru" target="_blank" rel="noopener noreferrer"><span class="platform-icon">R</span>RuStore</a>
+                  <a class="platform-link platform-ok" href="https://ok.ru/games" target="_blank" rel="noopener noreferrer"><span class="platform-icon">OK</span>OK</a>
                   <a class="platform-link platform-yandex" href="https://yandex.ru/games/developer/92985#app=335063" target="_blank" rel="noopener noreferrer"><span class="platform-icon">Y</span>Yandex</a>
                 </div>
               </div>
             </div>
           </article>
 
-          <article class="game-row reveal reveal-left reveal-delay-2">
+          <article class="game-row reveal reveal-left reveal-delay-2" data-yandex-app="447180" data-game-url="https://s3.eponesh.com/games/22395/v2/">
             <div class="game-poster">
               <img src="Cube 2048/icon1.webp" alt="Merge Cone" />
             </div>
@@ -735,15 +730,15 @@
               <div>
                 <div class="platforms-label" data-i18n="platformsLabel">Платформы</div>
                 <div class="platform-links">
-                  <a class="platform-link platform-rustore disabled" href="#" aria-disabled="true"><span class="platform-icon">R</span>RuStore</a>
-                  <a class="platform-link platform-ok disabled" href="#" aria-disabled="true"><span class="platform-icon">OK</span>OK</a>
+                  <a class="platform-link platform-rustore" href="https://www.rustore.ru" target="_blank" rel="noopener noreferrer"><span class="platform-icon">R</span>RuStore</a>
+                  <a class="platform-link platform-ok" href="https://ok.ru/games" target="_blank" rel="noopener noreferrer"><span class="platform-icon">OK</span>OK</a>
                   <a class="platform-link platform-yandex" href="https://yandex.ru/games/developer/92985#app=447180" target="_blank" rel="noopener noreferrer"><span class="platform-icon">Y</span>Yandex</a>
                 </div>
               </div>
             </div>
           </article>
 
-          <article class="game-row row-reverse reveal reveal-right reveal-delay-3">
+          <article class="game-row row-reverse reveal reveal-right reveal-delay-3" data-yandex-app="485723" data-game-url="https://s3.eponesh.com/games/25932/v6/">
             <div class="game-poster">
               <img src="Block puzzle wooden/icon1-_1_.png" alt="Puzzle Picture" />
             </div>
@@ -756,9 +751,30 @@
               <div>
                 <div class="platforms-label" data-i18n="platformsLabel">Платформы</div>
                 <div class="platform-links">
-                  <a class="platform-link platform-rustore disabled" href="#" aria-disabled="true"><span class="platform-icon">R</span>RuStore</a>
-                  <a class="platform-link platform-ok disabled" href="#" aria-disabled="true"><span class="platform-icon">OK</span>OK</a>
+                  <a class="platform-link platform-rustore" href="https://www.rustore.ru" target="_blank" rel="noopener noreferrer"><span class="platform-icon">R</span>RuStore</a>
+                  <a class="platform-link platform-ok" href="https://ok.ru/games" target="_blank" rel="noopener noreferrer"><span class="platform-icon">OK</span>OK</a>
                   <a class="platform-link platform-yandex" href="https://yandex.ru/games/developer/92985#app=485723" target="_blank" rel="noopener noreferrer"><span class="platform-icon">Y</span>Yandex</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="game-row reveal reveal-left reveal-delay-4" data-game-url="https://html5.gamemonetize.co/mnuyp439756qtqw4s8qoen0hx1dcyzia/">
+            <div class="game-poster">
+              <img src="logo.png" alt="Boom Chain" />
+            </div>
+            <div class="game-details">
+              <div class="game-top">
+                <h3>Boom Chain</h3>
+                <div class="game-rating"><span data-i18n="ratingLabel">Рейтинг</span> <strong>NEW</strong></div>
+              </div>
+              <p data-i18n="gameBoomChainDesc">Новая аркадная игра из GameMonetize. Нажмите на карточку, чтобы играть прямо на сайте.</p>
+              <div>
+                <div class="platforms-label" data-i18n="platformsLabel">Платформы</div>
+                <div class="platform-links">
+                  <a class="platform-link platform-rustore" href="https://www.rustore.ru" target="_blank" rel="noopener noreferrer"><span class="platform-icon">R</span>RuStore</a>
+                  <a class="platform-link platform-ok" href="https://ok.ru/games" target="_blank" rel="noopener noreferrer"><span class="platform-icon">OK</span>OK</a>
+                  <a class="platform-link platform-yandex" href="https://yandex.ru/games/developer/92985" target="_blank" rel="noopener noreferrer"><span class="platform-icon">Y</span>Yandex</a>
                 </div>
               </div>
             </div>
@@ -770,6 +786,28 @@
     <footer>
       <div class="container" data-i18n="footerText">© 2026 SoManyGames. All rights reserved.</div>
     </footer>
+    <div class="play-modal" id="playModal" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="play-modal__dialog">
+        <div class="play-modal__header">
+          <h4 class="play-modal__title" id="playModalTitle">Play</h4>
+          <div class="play-modal__actions">
+            <a class="play-modal__open-link" id="playModalExternal" target="_blank" rel="noopener noreferrer" href="https://s3.eponesh.com">Открыть в новой вкладке</a>
+            <button class="play-modal__close" id="playModalClose" type="button" aria-label="Close">✕</button>
+          </div>
+        </div>
+        <div class="play-modal__frame-wrap">
+          <iframe
+            id="playModalFrame"
+            class="play-modal__frame"
+            src="about:blank"
+            title="Game player"
+            allow="autoplay; fullscreen; gamepad"
+            referrerpolicy="strict-origin-when-cross-origin"
+          ></iframe>
+        </div>
+        <p class="play-modal__hint">Если игра не запустилась во фрейме, нажмите "Открыть в новой вкладке".</p>
+      </div>
+    </div>
     <script>
       (function () {
         const i18n = {
@@ -789,13 +827,14 @@
             aboutText:
               "Наш фокус - качественный визуал, быстрое погружение в геймплей и долгосрочная удерживающая механика. Мы постоянно экспериментируем с жанрами, улучшаем UX и масштабируем наши проекты на новые аудитории.",
             gamesTitle: "Наши игры",
-            gamesSubtitle: "Все игры доступны на RuStore, OK и Яндекс Играх. Карточки расположены в кинематографичном стиле.",
+            gamesSubtitle: "Нажмите на квадратную иконку игры, чтобы открыть ее прямо на сайте.",
             gameNoobikDesc: "Скоростные препятствия, прыжки и паркур-испытания.",
             gameMoneyDesc: "Аркадное приключение со сбором монет и ростом результата.",
             gameBoltsDesc: "Залипательная головоломка, где важны логика и точность.",
             gameBackroomsDesc: "Атмосферный sandbox-экшен с напряженными погонями.",
             gameMergeDesc: "Динамичная merge-игра с нарастающей сложностью.",
             gamePuzzleDesc: "Расслабляющая пазл-игра с приятной визуальной подачей.",
+            gameBoomChainDesc: "Новая аркадная игра из GameMonetize. Нажмите на карточку, чтобы играть прямо на сайте.",
             ratingLabel: "Рейтинг",
             platformsLabel: "Платформы",
             footerText: "© 2026 SoManyGames. All rights reserved."
@@ -816,13 +855,14 @@
             aboutText:
               "Our focus is polished visuals, instant gameplay immersion, and long-term retention mechanics. We constantly experiment with genres, improve UX, and scale our projects to new audiences.",
             gamesTitle: "Our Games",
-            gamesSubtitle: "All games are available on RuStore, OK, and Yandex Games. Cards are styled in a cinematic alternating layout.",
+            gamesSubtitle: "Click a square game icon to launch it right on the website.",
             gameNoobikDesc: "Fast obstacles, jumps, and exciting parkour challenges.",
             gameMoneyDesc: "An arcade adventure about collecting coins and growing your score.",
             gameBoltsDesc: "An addictive puzzle where logic and precision matter.",
             gameBackroomsDesc: "Atmospheric sandbox action with intense chases.",
             gameMergeDesc: "A dynamic merge game with steadily rising complexity.",
             gamePuzzleDesc: "A relaxing puzzle game with a pleasant visual style.",
+            gameBoomChainDesc: "A new arcade title from GameMonetize. Click the card to play right on our website.",
             ratingLabel: "Rating",
             platformsLabel: "Platforms",
             footerText: "© 2026 SoManyGames. All rights reserved."
@@ -865,12 +905,6 @@
           });
         });
 
-        document.querySelectorAll(".platform-link.disabled").forEach((link) => {
-          link.addEventListener("click", (event) => {
-            event.preventDefault();
-          });
-        });
-
         const revealEls = document.querySelectorAll(".reveal");
         const io = new IntersectionObserver(
           (entries) => {
@@ -884,6 +918,50 @@
           { threshold: 0.17, rootMargin: "0px 0px -6% 0px" }
         );
         revealEls.forEach((el) => io.observe(el));
+
+        const modal = document.getElementById("playModal");
+        const modalFrame = document.getElementById("playModalFrame");
+        const modalTitle = document.getElementById("playModalTitle");
+        const modalExternal = document.getElementById("playModalExternal");
+        const modalClose = document.getElementById("playModalClose");
+
+        const openGameModal = (title, gameUrl, appId) => {
+          const fallbackUrl = appId ? `https://yandex.ru/games/app/${appId}` : "https://yandex.ru/games";
+          const finalUrl = gameUrl || fallbackUrl;
+          modalTitle.textContent = title || "Play";
+          modalExternal.href = finalUrl;
+          modalFrame.src = finalUrl;
+          modal.classList.add("open");
+          modal.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
+        };
+
+        const closeGameModal = () => {
+          modal.classList.remove("open");
+          modal.setAttribute("aria-hidden", "true");
+          modalFrame.src = "about:blank";
+          document.body.style.overflow = "";
+        };
+
+        document.querySelectorAll(".game-row").forEach((row) => {
+          const appId = row.dataset.yandexApp;
+          const gameUrl = row.dataset.gameUrl;
+          const gameTitle = row.querySelector("h3")?.textContent?.trim() || "Game";
+          row.addEventListener("click", (event) => {
+            if (event.target.closest(".platform-link")) return;
+            openGameModal(gameTitle, gameUrl, appId);
+          });
+        });
+
+        modal.addEventListener("click", (event) => {
+          if (event.target === modal) closeGameModal();
+        });
+        modalClose.addEventListener("click", closeGameModal);
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && modal.classList.contains("open")) {
+            closeGameModal();
+          }
+        });
       })();
     </script>
   </body>
